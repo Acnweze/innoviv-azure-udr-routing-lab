@@ -206,3 +206,77 @@ innoviv-azure-udr-routing-lab
 This lab demonstrates how Azure User Defined Routes can override default system routes to direct traffic through a custom virtual appliance. It also highlights the importance of validating Azure routing behavior, Linux forwarding, NAT configuration, and packet flow when implementing enterprise network architectures.
 
 ---
+## Screenshots & Evidence
+
+### Azure Virtual Network and Subnets
+
+The Innoviv network was segmented into multiple subnets for firewall, application, and database workloads.
+
+![Innoviv VNet Subnets](screenshots/01-vnet-subnets.png)
+
+
+### Firewall Router VM
+
+Innoviv-FW01 was deployed as the Linux routing appliance.
+
+![Innoviv Firewall VM](screenshots/02-fw01-vm.png)
+
+
+### Application VM
+
+Innoviv-APP01 was deployed inside the application subnet.
+
+![Innoviv Application VM](screenshots/03-app01-vm.png)
+
+
+### Route Table Configuration
+
+A custom Azure Route Table was created for application traffic control.
+
+![Route Table](screenshots/04-route-table.png)
+
+
+### Effective Routes
+
+The application subnet received the custom route:
+
+```
+0.0.0.0/0 → Virtual Appliance → 10.50.10.4
+```
+
+![Effective Routes](screenshots/05-effective-routes.png)
+
+
+### User Defined Route (UDR)
+
+Traffic was configured to flow through the firewall virtual appliance.
+
+![UDR Route](screenshots/06-udr-route.png)
+
+
+### Route Table Association
+
+The route table was associated with the Innoviv application subnet.
+
+![Route Association](screenshots/07-route-table-association.png)
+
+
+### NAT Configuration
+
+Linux NAT was configured using iptables MASQUERADE.
+
+![MASQUERADE Configuration](screenshots/08-masquerade-nat.png)
+
+
+### Firewall Internet Connectivity
+
+The firewall VM successfully reached the internet.
+
+![Firewall Ping Test](screenshots/09-fw01-internet-connectivity.png)
+
+
+### Azure Deployment Template
+
+Azure resource configuration export.
+
+![Azure Export Template](screenshots/10-azure-export-template.png)
